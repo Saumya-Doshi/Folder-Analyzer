@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Analysis Result</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #3498db, #e74c3c);
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        h1 {
+            background-color: rgba(52, 152, 219, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            flex-grow: 1;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            max-width: 100px;
+            height: auto;
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(52, 152, 219, 0.8);
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .delete-button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        form {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Folder Analysis Result</h1>
+        <img src="static\Logo.png" alt="Logo" class="logo">
+    </div>
+
+    <h2>Total Folder Size:</h2>
+    <p>Total Folder Size: {{ size }} {{ size_unit }}</p>
+
+    <h2>List of Files:</h2>
+    <form method="post" action="/create_file_with_extension">
+        <input type="text" name="folder_path" value="{{ folder_path }}" hidden>
+        <input type="text" name="file_name" placeholder="File Name">
+        <input type="text" name="file_extension" placeholder="File Extension">
+        <textarea name="file_content" placeholder="File Content"></textarea>
+        <button type="submit">Create File</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>File Name</th>
+            <th>File Size</th>
+            <th>Size Unit</th>
+            <th>Extension</th>
+            <th>Modification Date</th>
+            <th>Actions</th>
+        </tr>
+        {% for file_info in file_list %}
+        <tr>
+            <td>{{ file_info[0] }}</td>
+            <td>{{ file_info[1] }}</td>
+            <td>{{ file_info[2] }}</td>
+            <td>{{ file_info[3] }}</td>
+            <td>{{ file_info[4] }}</td>
+            <td>
+                <form action="/delete" method="post">
+                    <input type="hidden" name="folder_path" value="{{ request.form.folder_path }}">
+                    <input type="hidden" name="size_unit" value="{{ request.form.size_unit }}">
+                    <input type="hidden" name="min_size" value="{{ request.form.min_size }}">
+                    <input type="hidden" name="max_size" value="{{ request.form.max_size }}">
+                    <input type="hidden" name="file_name" value="{{ file_info[0] }}">
+                    <button class="delete-button" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

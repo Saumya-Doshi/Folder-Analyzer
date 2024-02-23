@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Analysis</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #a8d9f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #d4ecf6;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            margin-right: 10px;
+        }
+
+        h2 {
+            color: #3498db;
+            font-size: 28px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        input[type="text"],
+        select,
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('arrow.png');
+            background-repeat: no-repeat;
+            background-position: right center;
+            padding-right: 30px;
+        }
+
+        input[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2374b4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="static\Logo.png" alt="logo" class="logo">
+            <h2>Folder Analysis</h2>
+        </div>
+        <form action="/analyze" method="POST">
+            <label for="folder_path">Folder Path:</label>
+            <input type="text" id="folder_path" name="folder_path" required>
+
+            <label for="size_unit">Size Unit:</label>
+            <select id="size_unit" name="size_unit">
+                <option value="B">Bytes</option>
+                <option value="KB">Kilobytes</option>
+                <option value="MB">Megabytes</option>
+                <option value="GB">Gigabytes</option>
+                <option value="TB">Terabytes</option>
+            </select>
+
+            <label for="min_size">Minimum Size:</label>
+            <input type="number" id="min_size" name="min_size">
+
+            <label for="max_size">Maximum Size:</label>
+            <input type="number" id="max_size" name="max_size">
+
+            <input type="submit" value="Analyze">
+            
+        </form>
+    </div>
+</body>
+</html>
